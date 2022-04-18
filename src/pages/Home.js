@@ -1,20 +1,24 @@
 import React from "react";
-import SigninModal from "../components/auth/SigninModal";
-import SignupModal from "../components/auth/SignupModal";
-import SignoutButton from "../components/auth/SignoutButton";
-import authStore from "../stores/authStore";
-import semesterStore from "../stores/semesterStore";
 import { observer } from "mobx-react";
-const SigninPage = () => {
-  console.log(authStore.user); //? to show the user info signin
+//? Auth:
+import SigninButton from "../components/auth/SigninButton";
+import SignupButton from "../components/auth/SignupButton";
+//? semesters:
+import semesterStore from "../stores/semesterStore";
+import ADDSemesterItem from "../components/semester/ADDSemesterItem";
+import SemesterDetail from "../components/semester/SemesterDetail";
+
+const Home = () => {
   return (
     <div>
       <h1>Welcome To The Team Evaluation </h1>
-      <SigninModal />
-      <SignupModal />
-      <SignoutButton />
+
+      <SigninButton />
+      <SignupButton />
+      <ADDSemesterItem />
+      <SemesterDetail semesters={semesterStore.semester} />
     </div>
   );
 };
 
-export default observer(SigninPage);
+export default observer(Home);
