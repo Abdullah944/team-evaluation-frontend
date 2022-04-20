@@ -1,19 +1,18 @@
+import { observer } from "mobx-react";
 import React from "react";
+// ? semester item & semester list:
 import ADDSemesterItem from "../components/semester/ADDSemesterItem";
+import SemesterList from "../components/semester/SemesterList";
 
-const AdminPage = ({ semesters }) => {
-  const semesterList =
-    semesters && semesters.length !== 0 ? (
-      semesters
-        .map((semester) => (
-          <ADDSemesterItem semester={semester} key={semester.id} />
-        ))
-        .reverse()
-    ) : (
-      <p> No semesters yet</p>
-    );
-
-  return <div className="col-lg-8"> {semesterList} </div>;
+const AdminPage = () => {
+  return (
+    <div className="col-lg-8">
+      <ADDSemesterItem />
+      <div>
+        <SemesterList />
+      </div>
+    </div>
+  );
 };
 
-export default AdminPage;
+export default observer(AdminPage);

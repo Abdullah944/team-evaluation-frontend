@@ -1,9 +1,16 @@
+import { observer } from "mobx-react";
 import React, { useState } from "react";
+// ? semester BTN :
+import ADDsemesterButton from "./ADDsemesterButton";
+//? STORES
 import semesterStore from "../../stores/semesterStore";
 
 //? SHAPE OF ADDING ITEM:
 const ADDSemesterItem = () => {
+  //? semester info holder:
   const [newSemester, setNewSemester] = useState("");
+  //? hide & show form:
+  const [visible, setVisible] = useState(false);
 
   const handleChange = (e) =>
     setNewSemester({
@@ -11,13 +18,23 @@ const ADDSemesterItem = () => {
       [e.target.name]: e.target.value,
     });
 
-  const handleSubmit = (e) => {
+  const handleSubmitSave = (e) => {
     e.preventDefault();
     semesterStore.createSemester(newSemester);
+    setNewSemester({});
+    setVisible(!visible);
+
+    alert("SEMESTER created");
   };
+
+  const handleSubmitCancel = (e) => {
+    e.preventDefault();
+    setVisible(!visible);
+    setNewSemester({});
+  };
+
   return (
     <div>
-      {" "}
       <div className="accordion-item" style={{ border: "2px solid" }}>
         <h2 className="accordion-header">
           <div
@@ -27,38 +44,44 @@ const ADDSemesterItem = () => {
               marginBottom: "5px",
             }}
           >
-            <form onSubmit={() => handleSubmit}>
-              <input
-                name="name"
-                className="form-control"
-                type="text"
-                placeholder="Enter semester name"
-                onChange={handleChange}
-                style={{
-                  marginLeft: "10px",
-                  width: "75%",
-                  border: "0px",
-                }}
-              ></input>
+            {/* SHOW AND HIDE THE FORM BUTTON */}
+            <ADDsemesterButton visible={visible} setVisible={setVisible} />
+            {visible && (
+              <form onSubmit={handleSubmitSave}>
+                <input
+                  name="name"
+                  className="form-control"
+                  type="text"
+                  placeholder="Enter semester name"
+                  onChange={handleChange}
+                  style={{
+                    marginLeft: "10px",
+                    width: "75%",
+                    border: "0px",
+                  }}
+                ></input>
 
-              <div style={{ position: "absolute", right: "10px", top: "1px" }}>
-                <button
-                  className="btn btn-translucent-success"
-                  style={{ marginRight: "10px", padding: "5px" }}
-                  onClick={() => handleSubmit}
-                  type="submit"
+                <div
+                  style={{ position: "absolute", right: "10px", top: "1px" }}
                 >
-                  SAVE
-                </button>
-                <button
-                  className="btn btn-translucent-danger"
-                  style={{ padding: "5px" }}
-                  onClick={() => handleSubmit}
-                >
-                  CANCEL
-                </button>
-              </div>
-            </form>
+                  <button
+                    className="btn btn-translucent-success"
+                    style={{ marginRight: "10px", padding: "5px" }}
+                    onClick={handleSubmitSave}
+                    type="submit"
+                  >
+                    SAVE
+                  </button>
+                  <button
+                    className="btn btn-translucent-danger"
+                    style={{ padding: "5px" }}
+                    onClick={handleSubmitCancel}
+                  >
+                    CANCEL
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </h2>
         <div
@@ -66,9 +89,8 @@ const ADDSemesterItem = () => {
           data-bs-parent="#accordionExample"
         ></div>
       </div>
-      ;
     </div>
   );
 };
 
-export default ADDSemesterItem;
+export default observer(ADDSemesterItem);
