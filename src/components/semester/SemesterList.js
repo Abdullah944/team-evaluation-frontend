@@ -1,5 +1,7 @@
 import { observer } from "mobx-react";
 import React from "react";
+import { Accordion } from "react-bootstrap";
+// ? STORES:
 import semesterStore from "../../stores/semesterStore";
 import SemesterItem from "./SemesterItem";
 
@@ -11,14 +13,17 @@ function SemesterList() {
         .map((semester) => (
           <SemesterItem semester={semester} key={semester.id} />
         ))
-        .reverse()
+        .reverse() //? To make it top of the list.
     ) : (
       <p> No semesters yet</p>
     );
 
   return (
     <div>
-      <h3>{semesterList}</h3>
+      <div>
+        {/* father of the accordion here , the rest in the semester item: */}
+        <Accordion defaultActiveKey="0">{semesterList}</Accordion>
+      </div>
     </div>
   );
 }
