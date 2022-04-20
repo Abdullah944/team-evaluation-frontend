@@ -6,28 +6,30 @@ class AuthStore {
   constructor() {
     makeAutoObservable(this);
   }
-
+  //? SET_USER:
   setUser = (token) => {
     instance.defaults.headers.common.Authorization = `Bearer ${token}`;
     localStorage.setItem("token", token);
   };
-  //
+
+  //? SIGN_OUT:
   signout = () => {
     localStorage.removeItem("token");
     this.user = null;
   };
 
-  signup = async (userData) => {
+  //? SIGN_UP:
+  signup = async (userData, navigate) => {
     try {
       await instance.post("/api/users/", userData);
-      await this.signin(userData);
-      //   console.log(res.data);
+      await this.signin(userData, navigate);
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
 
-  signin = async (userData) => {
+  //? SIGN_IN:
+  signin = async (userData, navigate) => {
     try {
       const res = await instance.post("/api/jwt/create/", userData);
       console.log(res.data);
@@ -35,22 +37,21 @@ class AuthStore {
       const res2 = await instance.get("/api/users/me/");
       console.log(res2.data);
       this.user = res2.data;
+      navigate("/Admin");
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
 
+  //? CHECK_FOR_TOKEN:
   checkForToken = async () => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        // console.log(token);
         this.setUser(token);
         const res2 = await instance.get("/api/users/me/");
         this.user = res2.data;
-        // console.log(res2.data);
       } catch (error) {
-        // console.log(error);
         this.signout();
       }
     } else this.signout();

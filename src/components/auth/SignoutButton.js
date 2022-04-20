@@ -8,7 +8,7 @@ function SignoutButton() {
     authStore.signout();
   };
   return (
-    <Button className="center sign-in-btn" onClick={handleSubmit}>
+    <Button className=" sign-in-btn" onClick={handleSubmit}>
       Signout
     </Button>
   );

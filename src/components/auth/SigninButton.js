@@ -6,9 +6,7 @@ const SigninButton = () => {
   return (
     <div>
       <Link to={"/SigninPage"}>
-        <Button className="center sign-in-btn" variant="outline-light mx-3">
-          Signin
-        </Button>
+        <Button>Signin</Button>
       </Link>
     </div>
   );
