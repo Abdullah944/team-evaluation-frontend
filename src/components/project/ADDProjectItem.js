@@ -12,22 +12,21 @@ const ADDProjectItem = ({ semester }) => {
   //? hide & show form:
   const [visible, setVisible] = useState(false);
 
+  // ? Grab what the user type:
   const handleChange = (e) =>
     setNewProject({
       ...newProject,
       [e.target.name]: e.target.value,
       semester: semester.id,
     });
-
+  // ? SAVE:
   const handleSubmitSave = (e) => {
-    e.preventDefault();
-    projectStore.createProject(newProject);
-    setNewProject({});
+    e.preventDefault(); //? prevent refresh page.
+    projectStore.createProject(newProject); //? create project
+    setNewProject({}); //?make me the project empty back.
     setVisible(!visible);
-
-    alert("PROJECT created");
   };
-
+  // ? Cancel:
   const handleSubmitCancel = (e) => {
     e.preventDefault();
     setVisible(!visible);
@@ -74,6 +73,7 @@ const ADDProjectItem = ({ semester }) => {
                   }}
                 ></input>
 
+                {/* SAVE */}
                 <div
                   style={{ position: "absolute", right: "10px", top: "1px" }}
                 >
@@ -85,6 +85,8 @@ const ADDProjectItem = ({ semester }) => {
                   >
                     SAVE
                   </button>
+
+                  {/* Cancel */}
                   <button
                     className="btn btn-translucent-danger"
                     style={{ padding: "5px" }}

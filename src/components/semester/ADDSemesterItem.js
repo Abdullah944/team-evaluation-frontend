@@ -12,21 +12,20 @@ const ADDSemesterItem = () => {
   //? hide & show form:
   const [visible, setVisible] = useState(false);
 
+  // ? Grab what the user type:
   const handleChange = (e) =>
     setNewSemester({
       ...newSemester,
       [e.target.name]: e.target.value,
     });
-
+  // ? SAVE:
   const handleSubmitSave = (e) => {
-    e.preventDefault();
-    semesterStore.createSemester(newSemester);
-    setNewSemester({});
+    e.preventDefault(); //? prevent refresh page.
+    semesterStore.createSemester(newSemester); //? create semester
+    setNewSemester({}); //?make me the semester empty back.
     setVisible(!visible);
-
-    alert("SEMESTER created");
   };
-
+  // ? Cancel:
   const handleSubmitCancel = (e) => {
     e.preventDefault();
     setVisible(!visible);
@@ -61,6 +60,7 @@ const ADDSemesterItem = () => {
                   }}
                 ></input>
 
+                {/* SAVE */}
                 <div
                   style={{ position: "absolute", right: "10px", top: "1px" }}
                 >
@@ -72,6 +72,7 @@ const ADDSemesterItem = () => {
                   >
                     SAVE
                   </button>
+                  {/* Cancel */}
                   <button
                     className="btn btn-translucent-danger"
                     style={{ padding: "5px" }}

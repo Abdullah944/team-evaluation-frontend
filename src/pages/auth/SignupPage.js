@@ -18,7 +18,7 @@ function SignupPage() {
   };
   return (
     <div>
-      <h1>SIGNUP PAGE</h1>
+      <h1>SIGN-UP PAGE</h1>
       <div className="container">
         <div className="row d-flex justify-content-center">
           <div className="col-md-4 ">

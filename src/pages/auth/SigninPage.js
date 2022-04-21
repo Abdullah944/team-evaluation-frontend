@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
-// ? SIGN-OUT_BTN:
-import SignoutButton from "../../components/auth/SignoutButton";
 // ? STORES:
 import authStore from "../../stores/authStore";
 
@@ -16,12 +14,12 @@ const SigninPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    // ? make sure
     authStore.signin(user, navigate);
   };
   return (
     <div>
-      <h1>SIGNIN PAGE</h1>
+      <h1>SIGN-IN PAGE</h1>
       <div className="container">
         <div className="row d-flex justify-content-center">
           <div className="col-md-4 ">
@@ -51,8 +49,6 @@ const SigninPage = () => {
                 Submit
               </button>
             </form>
-            <br />
-            <SignoutButton />
           </div>
         </div>
       </div>
