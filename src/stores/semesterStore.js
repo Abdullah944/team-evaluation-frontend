@@ -21,7 +21,6 @@ class SemesterStore {
   createSemester = async (data) => {
     try {
       const res = await instance.post("api/semester/", data);
-      // console.log("data", res.data);
       this.semester.push(res.data);
     } catch (error) {
       alert(error.response.data.name);

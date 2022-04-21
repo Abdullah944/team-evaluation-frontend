@@ -1,5 +1,4 @@
 import React from "react";
-import { observer } from "mobx-react";
 import { Accordion } from "react-bootstrap";
 // ? Project ITEM:
 import ProjectItem from "./ProjectItem";
@@ -25,4 +24,4 @@ function ProjectList({ semester }) {
   );
 }
 
-export default observer(ProjectList);
+export default ProjectList;
