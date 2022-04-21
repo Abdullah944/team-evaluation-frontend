@@ -1,5 +1,4 @@
 import React from "react";
-
 //? HOW THE ITEM LOOKS: <project> passed from projectList:
 import { Accordion } from "react-bootstrap";
 // ? PROJECt ITEM:

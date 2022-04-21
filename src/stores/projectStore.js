@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { instance } from "./instance";
+import semesterStore from "./semesterStore";
 
 class ProjectStore {
   project = null;
@@ -20,6 +21,7 @@ class ProjectStore {
     try {
       const res = await instance.post("api/project/", data);
       this.project.push(res.data);
+      await semesterStore.fetchAll(); //? make the project updated with the semester & project
     } catch (error) {
       alert(error.response.data.name);
       console.log(error.response);

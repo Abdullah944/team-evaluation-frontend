@@ -1,5 +1,4 @@
 import React from "react";
-import { observer } from "mobx-react";
 //? Auth:
 import SigninButton from "../components/auth/SigninButton";
 import SignupButton from "../components/auth/SignupButton";
@@ -15,4 +14,4 @@ const Home = () => {
   );
 };
 
-export default observer(Home);
+export default Home;
