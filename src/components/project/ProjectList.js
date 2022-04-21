@@ -3,14 +3,12 @@ import { observer } from "mobx-react";
 import { Accordion } from "react-bootstrap";
 // ? Project ITEM:
 import ProjectItem from "./ProjectItem";
-// ? STORES:
-import projectStore from "../../stores/projectStore";
 
 //? MAPPING THROUGH THE ITEMS & SHOW THEM:
-function ProjectList() {
+function ProjectList({ semester }) {
   const projectList =
-    projectStore.project && projectStore.project.length !== 0 ? (
-      projectStore.project.map((project) => (
+    semester.project.length !== 0 ? (
+      semester.project.map((project) => (
         <ProjectItem project={project} key={project.id} />
       ))
     ) : (
@@ -20,6 +18,7 @@ function ProjectList() {
   return (
     <div>
       <div>
+        {/* main heading */}
         <Accordion defaultActiveKey="0">{projectList}</Accordion>
       </div>
     </div>
