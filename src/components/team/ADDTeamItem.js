@@ -12,6 +12,7 @@ const ADDTeamItem = ({ project }) => {
   //? hide & show form:
   const [visible, setVisible] = useState(false);
 
+  // ? Grab what the user type:
   const handleChange = (e) =>
     setNewTeam({
       ...newTeam,
@@ -19,15 +20,14 @@ const ADDTeamItem = ({ project }) => {
       project: project.id,
     });
 
+  // ? SAVE:
   const handleSubmitSave = (e) => {
-    e.preventDefault();
-    teamStore.createTeam(newTeam);
-    setNewTeam({});
+    e.preventDefault(); //? prevent refresh page.
+    teamStore.createTeam(newTeam); //? create team
+    setNewTeam({}); //?make me the team empty back.
     setVisible(!visible);
-
-    alert("Team created");
   };
-
+  // ? CANCEL:
   const handleSubmitCancel = (e) => {
     e.preventDefault();
     setVisible(!visible);
@@ -62,6 +62,7 @@ const ADDTeamItem = ({ project }) => {
                   }}
                 ></input>
 
+                {/* SAVE */}
                 <div
                   style={{ position: "absolute", right: "10px", top: "1px" }}
                 >
@@ -73,6 +74,7 @@ const ADDTeamItem = ({ project }) => {
                   >
                     SAVE
                   </button>
+                  {/* Cancel */}
                   <button
                     className="btn btn-translucent-danger"
                     style={{ padding: "5px" }}
