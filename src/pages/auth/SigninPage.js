@@ -16,6 +16,7 @@ const SigninPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     authStore.signin(user, navigate);
   };
   return (

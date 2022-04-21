@@ -6,7 +6,9 @@ import { Accordion } from "react-bootstrap";
 import ADDTeamItem from "../team/ADDTeamItem";
 
 function ProjectItem({ project }) {
-  const teamList = project.team.map((team) => <h1>{team.name}</h1>);
+  const teamList = project.team.map((team) => (
+    <h4 key={team.id}>{team.name} </h4>
+  ));
 
   return (
     <Accordion.Item eventKey={project.id}>
@@ -15,7 +17,7 @@ function ProjectItem({ project }) {
         {/* SHOW THE LIST */}
         {teamList}
         {/*  SHAPE OF ADDING */}
-        <ADDTeamItem key={project.id} project={project} />
+        <ADDTeamItem project={project} />
       </Accordion.Body>
     </Accordion.Item>
   );
