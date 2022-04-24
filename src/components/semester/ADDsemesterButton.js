@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 const ADDsemesterButton = ({ setVisible, visible }) => {
   return (
     <div>
-      <Button onClick={() => setVisible(!visible)}>Add Semester</Button>
+      <Button onClick={() => setVisible(!visible)}>ADD Semester</Button>
     </div>
   );
 };

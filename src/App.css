@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background: wheat;
+   background: linear-gradient(#e66465, #9198e5)
   
 
 }
@@ -21,4 +21,11 @@
   margin-bottom: 10px;
 }
 
+/* Detail Page */
+.detail-container{
+  display: flex;
+}
+.detail-btn {
+  justify-content: "flex-start"
+}
 
