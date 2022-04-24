@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { instance } from "./instance";
+import projectStore from "./projectStore";
 import semesterStore from "./semesterStore";
 
 class TeamStore {
@@ -22,6 +23,7 @@ class TeamStore {
     try {
       const res = await instance.post("api/team/", data);
       this.team.push(res.data);
+      await projectStore.fetchAll(); //? to make sure the project to get null
       await semesterStore.fetchAll(); //? make the team updated with the semester & project
     } catch (error) {
       alert(error.response.data.name);

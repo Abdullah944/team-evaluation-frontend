@@ -9,17 +9,17 @@ import criteriaStore from "../../stores/citeriaStore";
 
 //? SHAPE OF ADDING PROJECT:
 const ADDProjectItem = ({ semester }) => {
-  //? project info holder:
+  //? PROJECT info holder:
   const [newProject, setNewProject] = useState("");
-  //? hide & show form (Project):
+  //? hide & show form (PROJECT):
   const [visible, setVisible] = useState(false);
 
   // ----  criteria:
-  const [visibleCriteria, setvisibleCriteria] = useState(false);
-  const [criteria, setCriteria] = useState([]);
-  const [holdCriteriaInfo, setHoldCriteriaInfo] = useState("");
+  const [visibleCriteria, setvisibleCriteria] = useState(false); //? hide & show form (CRITERIA):
+  const [criteria, setCriteria] = useState([]); //? array of (CRITERIA) ID's
+  const [holdCriteriaInfo, setHoldCriteriaInfo] = useState(""); //?  (CRITERIA) info holder:
 
-  // ? Grab what the user type:
+  // ? Grab what the user type in PROJECT:
   const handleChange = (e) =>
     setNewProject({
       ...newProject,
@@ -27,43 +27,43 @@ const ADDProjectItem = ({ semester }) => {
       semester: semester.id,
     });
 
-  // ? SAVE:
+  // ? SAVE (PROJECT) in form:
   const handleSubmitSave = (e) => {
     e.preventDefault(); //? prevent refresh page.
     const project = { ...newProject, criteria: criteria };
-    projectStore.createProject(project); //? create project
+    projectStore.createProject(project); //? create PROJECT
     setCriteria([]);
-    setNewProject({}); //?make me the project empty back.
+    setNewProject({}); //?make me the PROJECT empty back.
     setVisible(!visible);
   };
-  // ? Cancel:
+  // ? Cancel in (PROJECT) form:
   const handleSubmitCancel = (e) => {
     e.preventDefault();
     setVisible(!visible);
     setNewProject({});
   };
   // ----------------------------------------------- Criteria handling>
-  // ? handleChange  criteria
+  // ? handleChange (CRITERIA) to take the info as string
   const handleChangeCriteria = (e) =>
     setHoldCriteriaInfo({
       ...holdCriteriaInfo,
       [e.target.name]: e.target.value,
     });
-  // ? SAVE criteria:
+  // ? SAVE (CRITERIA):
   const handleSubmitSaveCriteria = (e) => {
     e.preventDefault(); //? prevent refresh page.
     criteriaStore.createCriteria(holdCriteriaInfo);
     setHoldCriteriaInfo({});
     setvisibleCriteria(!visibleCriteria);
   };
-  // ? criteria cancel:
+  // ? (CRITERIA) cancel:
   const handleSubmitCancelCriteria = (e) => {
     e.preventDefault();
     setvisibleCriteria(!visibleCriteria);
     setHoldCriteriaInfo({});
   };
 
-  //? make the adding criteria:
+  //? make the adding (CRITERIA) (if you find it remove it else include it):
   const handleCriteriaId = (id) => {
     const foundCriteria = criteria.find((criteria) => criteria === id);
     if (foundCriteria) {
@@ -75,7 +75,7 @@ const ADDProjectItem = ({ semester }) => {
     }
   };
 
-  //? criteria list to show in the drop down taken from the store:
+  //? (CRITERIA) list to show in the drop down taken from the store:
   const criteriaList = criteriaStore.criteria.map((criteria_) => (
     <Dropdown.Item
       key={criteria_.id}
@@ -141,7 +141,7 @@ const ADDProjectItem = ({ semester }) => {
 
                 {/* handleCriteriaButton */}
                 <Button onClick={() => setvisibleCriteria(!visibleCriteria)}>
-                  create Criteria
+                  Create Criteria
                 </Button>
                 {/*  Criteria FORM */}
 
