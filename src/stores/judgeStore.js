@@ -8,29 +8,36 @@ class JudgeStore {
     makeAutoObservable(this);
   }
 
-  //? GET ALL:
-  fetchAll = async () => {
+  // ? ADD JUDGE:
+  addJudge = async (judgeData, navigate) => {
     try {
-      const res = await instance.get("api/judge/");
-      this.judge = res.data;
+      const res = await instance.post("api/judge/", judgeData);
+      this.judge.push(res.data);
+      navigate(`./${res.data.id}`);
     } catch (error) {
       console.log(error.response);
     }
   };
-
-  // ? Create judge:
-  createJudge = async (data) => {
+  // ? GET JUDGE:
+  getJudge = async () => {
     try {
-      const res = await instance.post("api/judge/", data);
-      this.judge.push(res.data);
+      const res = await instance.get(`api/judge/`);
+      this.judge = res.data;
     } catch (error) {
-      alert(error.response.data.name);
+      console.log(error);
+    }
+  };
+  // ? UPDATE JUDGE:
+  updateJudge = async (judge) => {
+    try {
+      await instance.put(`api/judge/${judge.id}/`, judge);
+    } catch (error) {
       console.log(error.response);
     }
   };
 }
 
 const judgeStore = new JudgeStore();
-judgeStore.fetchAll();
+judgeStore.getJudge();
 
 export default judgeStore;

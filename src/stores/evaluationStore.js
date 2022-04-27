@@ -2,34 +2,39 @@ import { makeAutoObservable } from "mobx";
 import { instance } from "./instance";
 
 class EvaluationStore {
+  link = "";
   evaluation = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  //? GET ALL:
-  fetchAll = async () => {
+  //? GET EVALUATION:
+  getEvaluation = async (evaId) => {
     try {
-      const res = await instance.get("api/evaluation/");
+      const res = await instance.get(`api/evaluation/`);
       this.evaluation = res.data;
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     }
   };
-  // ? Create evaluation:
-  createEvaluation = async (data) => {
+
+  //$ LOCK PROJECT:
+  lockProject = async (evaluationInfo) => {
     try {
-      const res = await instance.post("api/evaluation/", data);
-      this.evaluation.push(res.data);
+      await instance.put(`api/evaluation/${evaluationInfo.id}/`, {
+        ...evaluationInfo,
+        isLock: true,
+      });
+      await this.getEvaluation();
+
+      // this.evaluation = res.data;
     } catch (error) {
-      alert(error.response.data.name);
       console.log(error.response);
     }
   };
 }
 
 const evaluationStore = new EvaluationStore();
-evaluationStore.fetchAll();
-
+evaluationStore.getEvaluation();
 export default evaluationStore;

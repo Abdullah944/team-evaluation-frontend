@@ -1,64 +1,61 @@
 import React, { useState } from "react";
 import { Accordion } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import judgeStore from "../../stores/judgeStore";
 
-const EvaluationPage = () => {
-  const [judgeMarks, setJudgeMarks] = useState("");
-
-  // ? Grab what the user type:
-  const handleChange = (e) =>
-    setJudgeMarks({
-      ...judgeMarks,
-      [e.target.name]: e.target.value,
-    });
-
+const EvaluationPage = ({ judge, project, semester }) => {
+  const handleSubmit = (e) => {
+    judgeStore.updateJudge(judge);
+  };
+  const teamList = judge.grade
+    ? judge.grade.map((team) => (
+        <Accordion defaultActiveKey="0">
+          <Accordion.Item eventKey={team.team_id}>
+            <Accordion.Header>{team.team_name}</Accordion.Header>
+            <Accordion.Body>
+              {/* Criteria MAP NAME */}
+              {team.grade.map((criteria) => {
+                return (
+                  <div>
+                    <p>{criteria.criteria_name}</p>
+                    <input
+                      name="number"
+                      className="form-control"
+                      type="text"
+                      placeholder="Enter Your evaluation from 1 to 10"
+                      style={{
+                        marginLeft: "10px",
+                        width: "75%",
+                        border: "0px",
+                      }}
+                      onChange={(e) => (criteria.grade = +e.target.value)}
+                    />
+                    <br />
+                    {/* NOTES */}
+                  </div>
+                );
+              })}
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+      ))
+    : "";
+  console.log(judge);
   return (
     <div>
-      <h1>Project name</h1>
-      <h2>Hello Judge name</h2>
+      <h1>{project.name}</h1>
+      <h2>Hello {judge.name}</h2>
       <p>
         please watch the presentations of the following teams carefully, and
         judge them according to the criteria below
       </p>
 
       {/* Map Criteria & TEAM NAME */}
-      <Accordion defaultActiveKey="0">
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>TEAM #1 MAP</Accordion.Header>
-          <Accordion.Body>
-            {/* Criteria MAP NAME */}
-            CRITERIA MAP
-            {/* evaluation number */}
-            <input
-              name="number"
-              className="form-control"
-              type="text"
-              placeholder="Enter Your evaluation from 1 to 10"
-              onChange={handleChange}
-              style={{
-                marginLeft: "10px",
-                width: "75%",
-                border: "0px",
-              }}
-            />
-            {/* NOTES */}
-            <input
-              name="notes"
-              className="form-control"
-              type="text"
-              placeholder="Notes:"
-              onChange={handleChange}
-              style={{
-                marginLeft: "10px",
-                width: "75%",
-                border: "0px",
-              }}
-            />
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
-
+      {teamList}
       {/* Navigate to thank you page + create evaluation to save in the backend and it's should be press able at the end only */}
-      <h2>Done</h2>
+      <Link to={"/ThankyouPage"} onClick={handleSubmit}>
+        <h2>Done</h2>
+      </Link>
     </div>
   );
 };

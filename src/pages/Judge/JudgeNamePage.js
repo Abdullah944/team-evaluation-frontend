@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import judgeStore from "../../stores/judgeStore";
+import { useNavigate } from "react-router-dom";
 
-const JudgeNamePage = () => {
+const JudgeNamePage = ({ evaluation, semester, project }) => {
+  const navigate = useNavigate();
+
   const [newJudge, setNewJudge] = useState("");
 
   // ? Grab what the user type:
   const handleChange = (e) =>
     setNewJudge({
       ...newJudge,
+      evaluation: evaluation.id,
       [e.target.name]: e.target.value,
     });
 
   // ? SAVE:
   const handleSubmitSave = (e) => {
     e.preventDefault(); //? prevent refresh page.
-    judgeStore.createJudge(newJudge); //? create judge
+
+    console.log(newJudge);
+    judgeStore.addJudge(newJudge, navigate); //? create judge
     setNewJudge({}); //?make me the Judge empty back.
   };
 
@@ -22,6 +28,7 @@ const JudgeNamePage = () => {
   const handleSubmitCancel = (e) => {
     e.preventDefault();
     setNewJudge({});
+    navigate("/");
   };
 
   return (
