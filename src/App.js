@@ -9,6 +9,7 @@ import SignupPage from "./pages/auth/SignupPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 //? Nav
 import NavBar from "./components/NavBar";
+import TeamDetailPage from "./pages/TeamDetailPage";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
           path="/ProjectDetail/:projectId"
           element={<ProjectDetailPage />}
         />
+        {/* TEAM Detail: */}
+        <Route path="/teamDetail/:teamId" element={<TeamDetailPage />} />
       </Routes>
     </div>
   );
