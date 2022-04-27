@@ -1,58 +1,88 @@
 import { observer } from "mobx-react";
-import React, { useState } from "react";
+import React from "react";
 import { Table } from "react-bootstrap";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, Link } from "react-router-dom";
+import { AiOutlineShareAlt, AiFillLock } from "react-icons/ai";
 // ? STORES:
+import evaluationStore from "../stores/evaluationStore";
 import projectStore from "../stores/projectStore";
-import teamStore from "../stores/teamStore";
 
 // ? show team Detail:
 const TeamDetailPage = () => {
-  const { projectId } = useParams(); //? {} to destructs the obj / take from the params
+  const { projectId, teamId } = useParams(); //? {} to destructs the obj / take from the params
 
-  //? grab a project:
+  // ? grab match project:
   const project = projectStore.project
     ? projectStore.project.find((p) => +projectId === p.id)
     : ""; //? match the params id with project in the store id.
 
-  //   //? grab a team:
-  //   const team = project.team ? project.team.find((t) => +teamId === t.id) : ""; //? match the params id with team in the store id.
-  //   console.log(team);
-
-  //? TEAM ID:
-  const team = teamStore.teams
-    ? teamStore.teams.find((team) => String(team.id) === String(team))
-    : null;
-  console.log(team);
   //?   Show teams:
-  //   const teamList = project.team
-  //     ? project.team.map((team) => (
-  //         <NavLink key={team.id} to={`/teamDetail/${team.id}`}>
-  //           {team.name}
-  //         </NavLink>
-  //       ))
-  //     : "";
-
-  //? show criteria:
-  const criteriaList = project.criteria
-    ? project.criteria.map((criteria) => (
-        <tr key={criteria.id}>
-          <td>{criteria.name}</td>
-          <td>0</td>
-          <td>{criteria.weight}</td>
-          <td>0</td>
-        </tr>
+  const teamList = project.team
+    ? project.team.map((team) => (
+        <NavLink key={team.id} to={`/ProjectDetail/${projectId}/${team.id}`}>
+          {team.name}
+        </NavLink>
       ))
     : "";
 
+  //? GET INFO FROM Evaluations:
+  const evaluations =
+    evaluationStore.evaluation && project
+      ? evaluationStore.evaluation.find((evaluation) =>
+          evaluation.id === project.linkId.id ? evaluation : ""
+        )
+      : "";
+  //? Criteria:  avg[0]= all
+  const criteria = evaluations ? (
+    evaluations.avg[teamId].criteria.map((criteria) => (
+      <tr key={criteria.criteria_id}>
+        <td>{criteria.criteria_name}</td>
+        <td>{criteria.avg}%</td>
+        <td>{criteria.criteria_weight}</td>
+        <td>{criteria.avg_weight}</td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td>judge please first</td>
+      <td>judge please first</td>
+      <td>judge please first</td>
+      <td>judge please first</td>
+    </tr>
+  );
+
   return (
     <div>
+      <div style={{ display: "flex", justifyContent: "flex-start" }}>
+        {/* SHARE BTN = on click give link */}
+        <div style={{ fontSize: 70, marginLeft: 100 }}>
+          <AiOutlineShareAlt />
+        </div>
+        {/* LOCK BTN */}
+        <div style={{ fontSize: 70 }}>
+          <AiFillLock />
+        </div>
+      </div>
+      {/* PROJECT NAME */}
       <h1>{project.name}</h1>
-      <h3>
-        <u style={{ display: "flex", justifyContent: "space-evenly" }}>
-          teamList
-        </u>
-      </h3>
+      <div style={{ display: "flex", gap: "2rem", justifyContent: "center" }}>
+        {/* ALL */}
+        <Link to={`/ProjectDetail/${projectId}`}>
+          <h3>All</h3>
+        </Link>
+        <h3>
+          <u
+            style={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              gap: "2rem",
+            }}
+          >
+            {teamList}
+          </u>
+        </h3>
+      </div>
+      {/* TABLE */}
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -62,19 +92,14 @@ const TeamDetailPage = () => {
             <th>Weighted Avg.</th>
           </tr>
         </thead>
-        <tbody>{criteriaList}</tbody>
+        <tbody>{criteria}</tbody>
       </Table>
+      {/* TOTAL: */}
       <u>
         <p>
-          <b style={{ color: "red" }}> Total :</b> Total Number %
+          <b> Total : {evaluations ? evaluations.avg[teamId].total : ""}%</b>
         </p>
       </u>
-      <div>
-        <h2>Note:</h2>
-        <hr />
-        <p>this is good team</p>
-        <hr />
-      </div>
     </div>
   );
 };

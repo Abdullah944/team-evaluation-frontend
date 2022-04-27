@@ -7,9 +7,13 @@ import AdminPage from "./pages/AdminPage";
 import SigninPage from "./pages/auth/SigninPage";
 import SignupPage from "./pages/auth/SignupPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
+import TeamDetailPage from "./pages/TeamDetailPage";
+// import EvaluationPage from "./pages/Judge/EvaluationPage";
+import ThankyouPage from "./pages/Judge/ThankyouPage";
+import NotFound404Page from "./pages/NotFound404Page";
 //? Nav
 import NavBar from "./components/NavBar";
-import TeamDetailPage from "./pages/TeamDetailPage";
+import Judge from "./pages/Judge/Judge";
 
 function App() {
   return (
@@ -20,6 +24,7 @@ function App() {
           <BsFillHouseDoorFill />
         </div>
       </Link>
+
       {/* NAV BAR */}
       <NavBar />
       {/* PAGES... */}
@@ -35,7 +40,24 @@ function App() {
           element={<ProjectDetailPage />}
         />
         {/* TEAM Detail: */}
-        <Route path="/teamDetail/:teamId" element={<TeamDetailPage />} />
+        <Route
+          path="/ProjectDetail/:projectId/:teamId"
+          element={<TeamDetailPage />}
+        />
+        {/* EvaluationPage (project): */}
+        <Route
+          path="/EvaluationPage/:evaluationId/:semesterId/:projectId/"
+          element={<Judge />}
+        />
+        {/* EvaluationPage (team): */}
+        <Route
+          path="/EvaluationPage/:evaluationId/:semesterId/:projectId/:judgeId"
+          element={<Judge />}
+        />
+        {/* NoteFound404Page: */}
+        <Route path="/NotFound404Page" element={<NotFound404Page />} />
+        {/* ThankyouPage: */}
+        <Route path="/ThankyouPage" element={<ThankyouPage />} />
       </Routes>
     </div>
   );

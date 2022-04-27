@@ -2,7 +2,7 @@ import { observer } from "mobx-react";
 import React, { useState } from "react";
 // ? semester BTN :
 import ADDsemesterButton from "./ADDsemesterButton";
-//? STORES
+//? STORES:
 import semesterStore from "../../stores/semesterStore";
 
 //? SHAPE OF ADDING ITEM:

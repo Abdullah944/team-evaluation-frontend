@@ -1,9 +1,12 @@
 import { observer } from "mobx-react";
 import React from "react";
-import { Table } from "react-bootstrap";
-import { NavLink, useParams } from "react-router-dom";
+import { Button, Table } from "react-bootstrap";
+import { Link, NavLink, useParams } from "react-router-dom";
+import { AiOutlineShareAlt, AiFillLock } from "react-icons/ai";
 // ? STORES:
 import projectStore from "../stores/projectStore";
+import evaluationStore from "../stores/evaluationStore";
+import semesterStore from "../stores/semesterStore";
 
 const ProjectDetailPage = () => {
   const { projectId } = useParams(); //? {} to destructs the obj / take from the params
@@ -12,36 +15,102 @@ const ProjectDetailPage = () => {
   const project = projectStore.project
     ? projectStore.project.find((p) => +projectId === p.id)
     : ""; //? match the params id with project in the store id.
-
+  //? semseter
+  const semester =
+    semesterStore.semester && project
+      ? semesterStore.semester.find(
+          (semester) => semester.id === project.semester
+        )
+      : "";
   //?   Show teams:
   const teamList = project.team
     ? project.team.map((team) => (
-        <NavLink key={team.id} to={`/teamDetail/${team.id}`}>
+        <NavLink key={team.id} to={`/ProjectDetail/${projectId}/${team.id}`}>
           {team.name}
         </NavLink>
       ))
     : "";
 
-  //? show criteria:
-  const criteriaList = project.criteria
-    ? project.criteria.map((criteria) => (
-        <tr key={criteria.id}>
-          <td>{criteria.name}</td>
-          <td>0</td>
-          <td>{criteria.weight}</td>
-          <td>0</td>
-        </tr>
-      ))
-    : "";
+  //? GET INFO FROM Evaluations:
+  const evaluations =
+    evaluationStore.evaluation && project
+      ? evaluationStore.evaluation.find(
+          (evaluation) => evaluation.id === project.linkId.id
+        )
+      : "";
+  console.log(evaluationStore.evaluation);
+  //? Criteria:  avg[0]= all
+  const criteria = evaluations ? (
+    evaluations.avg[0].criteria.map((criteria) => (
+      <tr key={criteria.criteria_id}>
+        <td>{criteria.criteria_name}</td>
+        <td>{criteria.avg}%</td>
+        <td>{criteria.criteria_weight}</td>
+        <td>{criteria.avg_weight}</td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td>judge please first</td>
+      <td>judge please first</td>
+      <td>judge please first</td>
+      <td>judge please first</td>
+    </tr>
+  );
+
+  //? LOCK the Judging:
+  const handleLock = (e) => {
+    e.preventDefault();
+    evaluations.isLocked = true;
+
+    evaluationStore.lockProject(evaluations);
+  };
+  //? UNLOCK the Judging:
+  const handleUnlock = (e) => {
+    e.preventDefault();
+    evaluations.isLocked = false;
+    evaluationStore.lockProject(evaluations);
+  };
 
   return (
     <div>
+      <div style={{ display: "flex", justifyContent: "flex-start" }}>
+        {/* SHARE BTN = on click give link */}
+        <div style={{ fontSize: 70, marginLeft: 100 }}>
+          <AiOutlineShareAlt
+            onClick={() =>
+              navigator.clipboard.writeText(
+                `http://localhost:3000/EvaluationPage/${evaluations.id}/${semester.id}/${projectId}`
+              )
+            }
+          />
+        </div>
+
+        {/* LOCK BTN */}
+        <Button onClick={handleLock}>lock</Button>
+        {/* Unlock BTN */}
+        <Button onClick={handleUnlock}>unlock</Button>
+      </div>
+      {/* PROJECT NAME */}
       <h1>{project.name}</h1>
-      <h3>
-        <u style={{ display: "flex", justifyContent: "space-evenly" }}>
-          {teamList}
-        </u>
-      </h3>
+      <div style={{ display: "flex", gap: "2rem", justifyContent: "center" }}>
+        {/* ALL */}
+        <Link to={`/ProjectDetail/${projectId}`}>
+          <h3>All</h3>
+        </Link>
+        <h3>
+          <u
+            style={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              gap: "2rem",
+            }}
+          >
+            {teamList}
+          </u>
+        </h3>
+      </div>
+      {/* TABLE */}
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -51,11 +120,12 @@ const ProjectDetailPage = () => {
             <th>Weighted Avg.</th>
           </tr>
         </thead>
-        <tbody>{criteriaList}</tbody>
+        <tbody>{criteria}</tbody>
       </Table>
+      {/* TOTAL: */}
       <u>
         <p>
-          <b style={{ color: "red" }}> Total :</b> Total Number %
+          <b> Total : {evaluations ? evaluations.avg[0].total : ""}%</b>
         </p>
       </u>
     </div>
