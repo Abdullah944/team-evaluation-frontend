@@ -1,7 +1,7 @@
 import React from "react";
+import { Accordion } from "react-bootstrap";
 
 //? HOW THE ITEM LOOKS: <semester> passed from SemesterList:
-import { Accordion } from "react-bootstrap";
 import ADDProjectItem from "../project/ADDProjectItem";
 import ProjectList from "../project/ProjectList";
 

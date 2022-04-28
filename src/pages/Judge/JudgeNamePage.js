@@ -1,6 +1,8 @@
+import { observer } from "mobx-react";
 import React, { useState } from "react";
-import judgeStore from "../../stores/judgeStore";
 import { useNavigate } from "react-router-dom";
+//? STORES:
+import judgeStore from "../../stores/judgeStore";
 
 const JudgeNamePage = ({ evaluation, semester, project }) => {
   const navigate = useNavigate();
@@ -68,4 +70,4 @@ const JudgeNamePage = ({ evaluation, semester, project }) => {
   );
 };
 
-export default JudgeNamePage;
+export default observer(JudgeNamePage);

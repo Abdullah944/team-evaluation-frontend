@@ -2,7 +2,7 @@ import { observer } from "mobx-react";
 import React from "react";
 import { Button, Table } from "react-bootstrap";
 import { Link, NavLink, useParams } from "react-router-dom";
-import { AiOutlineShareAlt, AiFillLock } from "react-icons/ai";
+import { AiOutlineShareAlt } from "react-icons/ai";
 // ? STORES:
 import projectStore from "../stores/projectStore";
 import evaluationStore from "../stores/evaluationStore";
@@ -15,6 +15,7 @@ const ProjectDetailPage = () => {
   const project = projectStore.project
     ? projectStore.project.find((p) => +projectId === p.id)
     : ""; //? match the params id with project in the store id.
+
   //? semseter
   const semester =
     semesterStore.semester && project
@@ -39,6 +40,8 @@ const ProjectDetailPage = () => {
         )
       : "";
   console.log(evaluationStore.evaluation);
+  // console.log({ evaluations });
+
   //? Criteria:  avg[0]= all
   const criteria = evaluations ? (
     evaluations.avg[0].criteria.map((criteria) => (
@@ -80,7 +83,8 @@ const ProjectDetailPage = () => {
           <AiOutlineShareAlt
             onClick={() =>
               navigator.clipboard.writeText(
-                `http://localhost:3000/EvaluationPage/${evaluations.id}/${semester.id}/${projectId}`
+                `http://localhost:3000/EvaluationPage/${evaluations.id}/${semester.id}/${projectId}`,
+                alert("copied")
               )
             }
           />

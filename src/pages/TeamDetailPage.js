@@ -1,11 +1,12 @@
 import { observer } from "mobx-react";
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import { useParams, NavLink, Link } from "react-router-dom";
-import { AiOutlineShareAlt, AiFillLock } from "react-icons/ai";
+import { AiOutlineShareAlt } from "react-icons/ai";
 // ? STORES:
 import evaluationStore from "../stores/evaluationStore";
 import projectStore from "../stores/projectStore";
+import semesterStore from "../stores/semesterStore";
 
 // ? show team Detail:
 const TeamDetailPage = () => {
@@ -15,6 +16,14 @@ const TeamDetailPage = () => {
   const project = projectStore.project
     ? projectStore.project.find((p) => +projectId === p.id)
     : ""; //? match the params id with project in the store id.
+
+  //? semseter
+  const semester =
+    semesterStore.semester && project
+      ? semesterStore.semester.find(
+          (semester) => semester.id === project.semester
+        )
+      : "";
 
   //?   Show teams:
   const teamList = project.team
@@ -51,17 +60,38 @@ const TeamDetailPage = () => {
     </tr>
   );
 
+  //? LOCK the Judging:
+  const handleLock = (e) => {
+    e.preventDefault();
+    evaluations.isLocked = true;
+
+    evaluationStore.lockProject(evaluations);
+  };
+  //? UNLOCK the Judging:
+  const handleUnlock = (e) => {
+    e.preventDefault();
+    evaluations.isLocked = false;
+    evaluationStore.lockProject(evaluations);
+  };
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "flex-start" }}>
         {/* SHARE BTN = on click give link */}
         <div style={{ fontSize: 70, marginLeft: 100 }}>
-          <AiOutlineShareAlt />
+          <AiOutlineShareAlt
+            onClick={() =>
+              navigator.clipboard.writeText(
+                `http://localhost:3000/EvaluationPage/${evaluations.id}/${semester.id}/${projectId}`
+              )
+            }
+          />
         </div>
+
         {/* LOCK BTN */}
-        <div style={{ fontSize: 70 }}>
-          <AiFillLock />
-        </div>
+        <Button onClick={handleLock}>lock</Button>
+        {/* Unlock BTN */}
+        <Button onClick={handleUnlock}>unlock</Button>
       </div>
       {/* PROJECT NAME */}
       <h1>{project.name}</h1>

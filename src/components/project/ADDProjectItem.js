@@ -14,7 +14,7 @@ const ADDProjectItem = ({ semester }) => {
   //? hide & show form (PROJECT):
   const [visible, setVisible] = useState(false);
 
-  // ----  criteria:
+  //? ----  CRITERIA useState =>:
   const [visibleCriteria, setvisibleCriteria] = useState(false); //? hide & show form (CRITERIA):
   const [criteria, setCriteria] = useState([]); //? array of (CRITERIA) ID's
   const [holdCriteriaInfo, setHoldCriteriaInfo] = useState(""); //?  (CRITERIA) info holder:
@@ -42,7 +42,7 @@ const ADDProjectItem = ({ semester }) => {
     setVisible(!visible);
     setNewProject({});
   };
-  // ----------------------------------------------- Criteria handling>
+  //? ----------------------------------------------- Criteria handling>
   // ? handleChange (CRITERIA) to take the info as string
   const handleChangeCriteria = (e) =>
     setHoldCriteriaInfo({

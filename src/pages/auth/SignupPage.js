@@ -7,15 +7,19 @@ import authStore from "../../stores/authStore";
 function SignupPage() {
   const navigate = useNavigate();
 
+  //? grab user info:
   const [user, setUser] = useState();
 
+  // ? handleChange:
   const handleChange = (event) =>
     setUser({ ...user, [event.target.name]: event.target.value });
 
+  // ? handleSubmit:
   const handleSubmit = (event) => {
     event.preventDefault();
     authStore.signup(user, navigate);
   };
+
   return (
     <div>
       <h1>SIGN-UP PAGE</h1>
