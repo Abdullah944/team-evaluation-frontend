@@ -12,7 +12,6 @@ class SemesterStore {
     try {
       const res = await instance.get("api/semester/");
       this.semester = res.data;
-      console.log(this.semester);
     } catch (error) {
       console.log(error.response);
     }

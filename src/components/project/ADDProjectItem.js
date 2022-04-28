@@ -36,12 +36,14 @@ const ADDProjectItem = ({ semester }) => {
     setNewProject({}); //?make me the PROJECT empty back.
     setVisible(!visible);
   };
+
   // ? Cancel in (PROJECT) form:
   const handleSubmitCancel = (e) => {
     e.preventDefault();
     setVisible(!visible);
     setNewProject({});
   };
+
   //? ----------------------------------------------- Criteria handling>
   // ? handleChange (CRITERIA) to take the info as string
   const handleChangeCriteria = (e) =>
@@ -88,6 +90,7 @@ const ADDProjectItem = ({ semester }) => {
     </Dropdown.Item>
   ));
   // ---------------------------------------
+
   return (
     <div>
       <div className="accordion-item" style={{ border: "2px solid" }}>

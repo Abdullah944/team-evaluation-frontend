@@ -1,11 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 //? HOW THE ITEM LOOKS: <project> passed from projectList:
 import { Accordion, Button } from "react-bootstrap";
 // ? PROJECt ITEM:
 import ADDTeamItem from "../team/ADDTeamItem";
 
 function ProjectItem({ project }) {
+  const navigate = useNavigate();
+
   const teamList = project.team.map((team) => (
     <h4 key={team.id}> {team.name} </h4>
   ));
@@ -14,11 +17,17 @@ function ProjectItem({ project }) {
     <Accordion.Item eventKey={project.id}>
       {/* Header */}
       <Accordion.Header>
+        {/* project name */}
         {project.name}
-        <div className="detail-container">
-          <Link to={`/ProjectDetail/${project.id}`}>
-            <Button className="detail-btn">Detail</Button>
-          </Link>
+
+        {/* Detail BTN */}
+        <div>
+          <Button
+            onClick={() => navigate(`/ProjectDetail/${project.id}`)}
+            className="detail-btn"
+          >
+            Detail
+          </Button>
         </div>
       </Accordion.Header>
 

@@ -76,9 +76,15 @@ const TeamDetailPage = () => {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "flex-start" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "2rem",
+        }}
+      >
         {/* SHARE BTN = on click give link */}
-        <div style={{ fontSize: 70, marginLeft: 100 }}>
+        <div style={{ fontSize: 70 }}>
           <AiOutlineShareAlt
             onClick={() =>
               navigator.clipboard.writeText(
