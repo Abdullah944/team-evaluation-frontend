@@ -19,6 +19,18 @@ class EvaluationStore {
     }
   };
 
+  //? AddEvaluation
+  addEvaluation = async (projectId) => {
+    try {
+      const response = await instance.post("/api/evaluation/", {
+        project: projectId,
+      });
+      this.evaluations.push(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //$ LOCK PROJECT:
   lockProject = async (evaluationInfo) => {
     try {

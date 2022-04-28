@@ -16,13 +16,14 @@ const ProjectDetailPage = () => {
     ? projectStore.project.find((p) => +projectId === p.id)
     : ""; //? match the params id with project in the store id.
 
-  //? semseter
+  //? semester:
   const semester =
     semesterStore.semester && project
       ? semesterStore.semester.find(
           (semester) => semester.id === project.semester
         )
       : "";
+
   //?   Show teams:
   const teamList = project.team
     ? project.team.map((team) => (
@@ -39,8 +40,6 @@ const ProjectDetailPage = () => {
           (evaluation) => evaluation.id === project.linkId.id
         )
       : "";
-  console.log(evaluationStore.evaluation);
-  // console.log({ evaluations });
 
   //? Criteria:  avg[0]= all
   const criteria = evaluations ? (
@@ -68,6 +67,7 @@ const ProjectDetailPage = () => {
 
     evaluationStore.lockProject(evaluations);
   };
+
   //? UNLOCK the Judging:
   const handleUnlock = (e) => {
     e.preventDefault();
@@ -75,19 +75,26 @@ const ProjectDetailPage = () => {
     evaluationStore.lockProject(evaluations);
   };
 
+  //? handleCopy
+  const handleCopy = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(
+      `http://localhost:3000/EvaluationPage/${evaluations.id}/${semester.id}/${projectId}`
+    );
+  };
+
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "flex-start" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "2rem",
+        }}
+      >
         {/* SHARE BTN = on click give link */}
-        <div style={{ fontSize: 70, marginLeft: 100 }}>
-          <AiOutlineShareAlt
-            onClick={() =>
-              navigator.clipboard.writeText(
-                `http://localhost:3000/EvaluationPage/${evaluations.id}/${semester.id}/${projectId}`,
-                alert("copied")
-              )
-            }
-          />
+        <div style={{ fontSize: 70 }}>
+          <AiOutlineShareAlt onClick={handleCopy} />
         </div>
 
         {/* LOCK BTN */}
