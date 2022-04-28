@@ -33,9 +33,7 @@ const Judge = () => {
   const judge = judgeStore.judge
     ? judgeStore.judge.find((judge) => judge.id === +judgeId)
     : "";
-  console.log({ evaluation });
-  console.log(evaluation.isLocked);
-  console.log(!evaluation.isLocked);
+
   return evaluation &&
     semester &&
     project &&

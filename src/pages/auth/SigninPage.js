@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
+import { observer } from "mobx-react";
 // ? STORES:
 import authStore from "../../stores/authStore";
 
 const SigninPage = () => {
   const navigate = useNavigate();
 
+  //? grab user info:
   const [user, setUser] = useState();
 
+  // ? handleChange:
   const handleChange = (event) =>
     setUser({ ...user, [event.target.name]: event.target.value });
 
+  // ? handleSubmit:
   const handleSubmit = (event) => {
     event.preventDefault();
     // ? make sure
     authStore.signin(user, navigate);
   };
+
   return (
     <div>
       <h1>SIGN-IN PAGE</h1>
@@ -56,4 +61,4 @@ const SigninPage = () => {
   );
 };
 
-export default SigninPage;
+export default observer(SigninPage);

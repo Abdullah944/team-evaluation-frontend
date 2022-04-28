@@ -1,8 +1,10 @@
+import { observer } from "mobx-react";
 import React from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import authStore from "../../stores/authStore";
 import { useNavigate } from "react-router-dom";
+//? STORE:
+import authStore from "../../stores/authStore";
 
 function SignoutButton() {
   const navigate = useNavigate();
@@ -23,4 +25,4 @@ function SignoutButton() {
   );
 }
 
-export default SignoutButton;
+export default observer(SignoutButton);

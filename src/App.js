@@ -8,11 +8,8 @@ import SigninPage from "./pages/auth/SigninPage";
 import SignupPage from "./pages/auth/SignupPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import TeamDetailPage from "./pages/TeamDetailPage";
-// import EvaluationPage from "./pages/Judge/EvaluationPage";
 import ThankyouPage from "./pages/Judge/ThankyouPage";
 import NotFound404Page from "./pages/NotFound404Page";
-//? Nav
-import NavBar from "./components/NavBar";
 import Judge from "./pages/Judge/Judge";
 
 function App() {
@@ -25,8 +22,6 @@ function App() {
         </div>
       </Link>
 
-      {/* NAV BAR */}
-      <NavBar />
       {/* PAGES... */}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -46,7 +41,7 @@ function App() {
         />
         {/* EvaluationPage (project): */}
         <Route
-          path="/EvaluationPage/:evaluationId/:semesterId/:projectId/"
+          path="/EvaluationPage/:evaluationId/:semesterId/:projectId"
           element={<Judge />}
         />
         {/* EvaluationPage (team): */}

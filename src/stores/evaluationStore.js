@@ -10,7 +10,7 @@ class EvaluationStore {
   }
 
   //? GET EVALUATION:
-  getEvaluation = async (evaId) => {
+  getEvaluation = async () => {
     try {
       const res = await instance.get(`api/evaluation/`);
       this.evaluation = res.data;
@@ -27,8 +27,6 @@ class EvaluationStore {
         isLock: true,
       });
       await this.getEvaluation();
-
-      // this.evaluation = res.data;
     } catch (error) {
       console.log(error.response);
     }

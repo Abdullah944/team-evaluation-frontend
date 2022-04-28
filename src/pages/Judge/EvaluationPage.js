@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { observer } from "mobx-react";
+import React from "react";
 import { Accordion } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import judgeStore from "../../stores/judgeStore";
@@ -30,8 +31,6 @@ const EvaluationPage = ({ judge, project, semester }) => {
                       }}
                       onChange={(e) => (criteria.grade = +e.target.value)}
                     />
-                    <br />
-                    {/* NOTES */}
                   </div>
                 );
               })}
@@ -40,7 +39,7 @@ const EvaluationPage = ({ judge, project, semester }) => {
         </Accordion>
       ))
     : "";
-  console.log(judge);
+
   return (
     <div>
       <h1>{project.name}</h1>
@@ -60,4 +59,4 @@ const EvaluationPage = ({ judge, project, semester }) => {
   );
 };
 
-export default EvaluationPage;
+export default observer(EvaluationPage);
