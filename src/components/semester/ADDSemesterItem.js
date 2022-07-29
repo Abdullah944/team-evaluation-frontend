@@ -1,31 +1,31 @@
 import { observer } from "mobx-react";
 import React, { useState } from "react";
-// ? semester BTN :
+// * semester BTN :
 import ADDsemesterButton from "./ADDsemesterButton";
-//? STORES:
+//* STORES:
 import semesterStore from "../../stores/semesterStore";
 
-//? SHAPE OF ADDING ITEM:
+//* SHAPE OF ADDING ITEM:
 const ADDSemesterItem = () => {
-  //? semester info holder:
+  //* semester info holder:
   const [newSemester, setNewSemester] = useState("");
-  //? hide & show form:
+  //* hide & show form:
   const [visible, setVisible] = useState(false);
 
-  // ? Grab what the user type:
+  // * Grab what the user type:
   const handleChange = (e) =>
     setNewSemester({
       ...newSemester,
       [e.target.name]: e.target.value,
     });
-  // ? SAVE:
+  // * SAVE:
   const handleSubmitSave = (e) => {
-    e.preventDefault(); //? prevent refresh page.
-    semesterStore.createSemester(newSemester); //? create semester
-    setNewSemester({}); //?make me the semester empty back.
+    e.preventDefault(); //* prevent refresh page.
+    semesterStore.createSemester(newSemester); //* create semester
+    setNewSemester({}); //*make me the semester empty back.
     setVisible(!visible);
   };
-  // ? Cancel:
+  // * Cancel:
   const handleSubmitCancel = (e) => {
     e.preventDefault();
     setVisible(!visible);

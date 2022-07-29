@@ -34,6 +34,7 @@ class AuthStore {
       const res = await instance.post("/api/jwt/create/", userData);
       console.log(res.data);
       this.setUser(res.data.access);
+
       const res2 = await instance.get("/api/users/me/");
       console.log(res2.data);
       this.user = res2.data;
